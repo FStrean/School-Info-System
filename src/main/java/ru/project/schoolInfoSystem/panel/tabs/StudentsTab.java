@@ -10,9 +10,8 @@ public class StudentsTab extends JPanel {
     public StudentsTab() {
         setLayout(new GridBagLayout());
 
-
-        JLabel nameLabel = new JLabel("ФИО");
-        JLabel classLabel = new JLabel("Номер класса");
+        JLabel nameLabel = new JLabel("ФИО      ");
+        JLabel classLabel = new JLabel("Номер класса        ");
 
         JTextField nameTextField = new JTextField();
         JTextField classTextField = new JTextField();
@@ -69,12 +68,12 @@ public class StudentsTab extends JPanel {
             addDialog.setLocationRelativeTo(null);
             addDialog.setLayout(new GridBagLayout());
 
-            JLabel nameLabel1 = new JLabel("ФИО");
-            JLabel birthdayLabel = new JLabel("Дата рождения");
-            JLabel addressLabel = new JLabel("Адрес проживания");
-            JLabel parentsLabel = new JLabel("ФИО родителя");
-            JLabel phoneLabel = new JLabel("Телефон");
-            JLabel classLabel1 = new JLabel("Класс");
+            JLabel fullNameLabel = new JLabel("ФИО      ");
+            JLabel birthdayLabel = new JLabel("Дата рождения        ");
+            JLabel addressLabel = new JLabel("Адрес проживания      ");
+            JLabel parentsLabel = new JLabel("ФИО родителя      ");
+            JLabel phoneLabel = new JLabel("Телефон     ");
+            JLabel studentClassLabel = new JLabel("Класс        ");
 
             JTextField nameTextField1 = new JTextField(50);
             JTextField birthdayTextField = new JTextField(50);
@@ -85,47 +84,47 @@ public class StudentsTab extends JPanel {
 
             JButton addStudentButton = new JButton("Добавить ученика");
 
-            addDialog.add(nameLabel1,new GridBagConstraints(0, 0, 1, 1, 1, 0,
+            addDialog.add(fullNameLabel,new GridBagConstraints(0, 0, 1, 1, 1, 0,
                     GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
-                    new Insets(0, 0, 0, 0), 0, 0));
+                    new Insets(0, 0, 1, 0), 0, 0));
             addDialog.add(nameTextField1,new GridBagConstraints(1, 0, 1, 1, 1, 0,
                     GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
-                    new Insets(0, 0, 0, 0), 0, 0));
+                    new Insets(0, 0, 1, 0), 0, 0));
 
             addDialog.add(birthdayLabel,new GridBagConstraints(0, 1, 1, 1, 1, 0,
                     GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
-                    new Insets(0, 0, 0, 0), 0, 0));
+                    new Insets(0, 0, 1, 0), 0, 0));
             addDialog.add(birthdayTextField,new GridBagConstraints(1, 1, 1, 1, 1, 0,
                     GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
-                    new Insets(0, 0, 0, 0), 0, 0));
+                    new Insets(0, 0, 1, 0), 0, 0));
 
             addDialog.add(addressLabel,new GridBagConstraints(0, 2, 1, 1, 1, 0,
                     GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
-                    new Insets(0, 0, 0, 0), 0, 0));
+                    new Insets(0, 0, 1, 0), 0, 0));
             addDialog.add(addressTextField,new GridBagConstraints(1, 2, 1, 1, 1, 0,
                     GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
-                    new Insets(0, 0, 0, 0), 0, 0));
+                    new Insets(0, 0, 1, 0), 0, 0));
 
             addDialog.add(parentsLabel,new GridBagConstraints(0, 3, 1, 1, 1, 0,
                     GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
-                    new Insets(0, 0, 0, 0), 0, 0));
+                    new Insets(0, 0, 1, 0), 0, 0));
             addDialog.add(parentsTextField,new GridBagConstraints(1, 3, 1, 1, 1, 0,
                     GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
-                    new Insets(0, 0, 0, 0), 0, 0));
+                    new Insets(0, 0, 1, 0), 0, 0));
 
             addDialog.add(phoneLabel,new GridBagConstraints(0, 4, 1, 1, 1, 0,
                     GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
-                    new Insets(0, 0, 0, 0), 0, 0));
+                    new Insets(0, 0, 1, 0), 0, 0));
             addDialog.add(phoneTextField,new GridBagConstraints(1, 4, 1, 1, 1, 0,
                     GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
-                    new Insets(0, 0, 0, 0), 0, 0));
+                    new Insets(0, 0, 1, 0), 0, 0));
 
-            addDialog.add(classLabel1,new GridBagConstraints(0, 5, 1, 1, 1, 1,
+            addDialog.add(studentClassLabel,new GridBagConstraints(0, 5, 1, 1, 1, 1,
                     GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
-                    new Insets(0, 0, 0, 0), 0, 0));
+                    new Insets(0, 0, 1, 0), 0, 0));
             addDialog.add(classTextField1,new GridBagConstraints(1, 5, 1, 1, 1, 1,
                     GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
-                    new Insets(0, 0, 0, 0), 0, 0));
+                    new Insets(0, 0, 1, 0), 0, 0));
 
             addDialog.add(addStudentButton,new GridBagConstraints(0, 6, 2, 1, 1, 0,
                     GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
