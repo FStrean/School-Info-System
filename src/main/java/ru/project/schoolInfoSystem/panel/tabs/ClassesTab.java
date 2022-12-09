@@ -72,10 +72,10 @@ public class ClassesTab extends JPanel {
             JLabel StudentsLabel = new JLabel("Ученики");
             JLabel classRoomLabel = new JLabel("Кабинет");
 
-            JTextField classNumberTextField1 = new JTextField(50);
-            JTextField classTeacherTextField = new JTextField(50);
-            JTextField StudentsTextField = new JTextField(50);
-            JTextField classRoomTextField = new JTextField(50);
+            JTextField classNumberTextField1 = new JTextField();
+            JTextField classTeacherTextField = new JTextField();
+            JTextField StudentsTextField = new JTextField();
+            JTextField classRoomTextField = new JTextField();
 
             JButton addClassButton = new JButton("Добавить класс");
 
