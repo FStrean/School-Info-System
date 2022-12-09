@@ -21,7 +21,6 @@ public class StudentsTab extends JPanel {
 
         TableModel tableModel = new TableModel();
         JTable studentsTable = new JTable(tableModel);
-
         JScrollPane tableScroll = new JScrollPane(studentsTable);
         tableScroll.setPreferredSize(new Dimension(700, 200));
 

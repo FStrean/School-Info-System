@@ -21,9 +21,9 @@ public class TeachersTab extends JPanel {
         JButton searchButton = new JButton("Поиск");
 
         TableModel tableModel = new TableModel();
-        JTable studentsTable = new JTable(tableModel);
+        JTable teachersTable = new JTable(tableModel);
 
-        JScrollPane tableScroll = new JScrollPane(studentsTable);
+        JScrollPane tableScroll = new JScrollPane(teachersTable);
         tableScroll.setPreferredSize(new Dimension(700, 200));
 
         JButton addButton = new JButton("Добавить нового учителя");

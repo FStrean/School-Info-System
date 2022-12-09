@@ -19,9 +19,9 @@ public class ClassesTab extends JPanel {
         JButton searchButton = new JButton("Поиск");
 
         TableModel tableModel = new TableModel();
-        JTable studentsTable = new JTable(tableModel);
+        JTable classesTable = new JTable(tableModel);
 
-        JScrollPane tableScroll = new JScrollPane(studentsTable);
+        JScrollPane tableScroll = new JScrollPane(classesTable);
         tableScroll.setPreferredSize(new Dimension(700, 200));
 
         JButton addButton = new JButton("Добавить новый класс");
