@@ -35,13 +35,13 @@ public class TimetableTab extends JPanel {
 
         add(classLabel, new GridBagConstraints(0, 0, 1, 1, 1, 0,
                 GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
-                new Insets(20, 100, 10, 10), 0, 0));
+                new Insets(20, 100, 10, 0), 0, 0));
         add(classTextField, new GridBagConstraints(1, 0, 1, 1, 1, 0,
                 GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
-                new Insets(20, -50, 10, 10), 0, 0));
-        add(searchButton, new GridBagConstraints(2, 0, 2, 1, 0, 0,
+                new Insets(20, -50, 10, 0), 0, 0));
+        add(searchButton, new GridBagConstraints(3, 0, 1, 1, 0, 0,
                 GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
-                new Insets(20, 10, 10, 100), 0, 0));
+                new Insets(20, 0, 10, 0), 0, 0));
 
         add(tableScroll, new GridBagConstraints(0, 1, 6, 1, 1, 1,
                 GridBagConstraints.NORTH, GridBagConstraints.BOTH,

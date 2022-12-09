@@ -40,9 +40,9 @@ public class StudentsTab extends JPanel {
         add(classTextField, new GridBagConstraints(1, 1, 1, 1, 0, 0,
                 GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
                 new Insets(0, -50, 10, 0), 0, 0));
-        add(searchPanel, new GridBagConstraints(3, 0, 2, 2, 0, 0,
+        add(searchPanel, new GridBagConstraints(3, 0, 1, 2, 0, 0,
                 GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
-                new Insets(20, 0, 0, 0), 0, 0));
+                new Insets(20, 50, 0, 0), 0, 0));
         searchPanel.add(searchButton, BorderLayout.CENTER);
 
 
