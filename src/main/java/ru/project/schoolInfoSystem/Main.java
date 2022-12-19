@@ -1,6 +1,6 @@
-package src.main.java.ru.project.schoolInfoSystem;
+package ru.project.schoolInfoSystem;
 
-import src.main.java.ru.project.schoolInfoSystem.panel.MainFrame;
+import ru.project.schoolInfoSystem.panel.MainFrame;
 
 import java.awt.*;
 

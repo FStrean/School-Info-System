@@ -1,4 +1,4 @@
-package src.main.java.ru.project.schoolInfoSystem.panel;
+package ru.project.schoolInfoSystem.panel;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;

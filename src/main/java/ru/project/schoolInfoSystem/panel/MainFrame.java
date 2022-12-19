@@ -1,6 +1,6 @@
-package src.main.java.ru.project.schoolInfoSystem.panel;
+package ru.project.schoolInfoSystem.panel;
 
-import src.main.java.ru.project.schoolInfoSystem.panel.tabs.*;
+import ru.project.schoolInfoSystem.panel.tabs.*;
 
 import javax.swing.*;
 import java.awt.*;
