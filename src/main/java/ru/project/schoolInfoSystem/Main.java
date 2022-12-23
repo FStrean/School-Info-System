@@ -9,5 +9,4 @@ public class Main {
         MainFrame mainFrame = new MainFrame("Панель Завуча", new Dimension(900, 600));
         mainFrame.init();
     }
-
 }
