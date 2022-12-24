@@ -10,6 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Teacher {
+
     private Long id;
 
     private String teacherName;
@@ -23,6 +24,4 @@ public class Teacher {
     private String education;
 
     private String phoneNumber;
-
-    private Long classId;
 }

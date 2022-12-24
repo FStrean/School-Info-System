@@ -4,15 +4,17 @@ import ru.project.schoolInfoSystem.dao.SubjectDao;
 import ru.project.schoolInfoSystem.dao.TeachersDao;
 import ru.project.schoolInfoSystem.model.Subject;
 import ru.project.schoolInfoSystem.model.Teacher;
-import ru.project.schoolInfoSystem.panel.TableModel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.util.Vector;
+import java.util.Objects;
+import java.util.function.Consumer;
 
 public class TeachersTab extends JPanel {
 
+    private JTable teachersTable;
+    private DefaultTableModel tableModel;
 
     public TeachersTab() {
         setLayout(new GridBagLayout());
@@ -22,6 +24,8 @@ public class TeachersTab extends JPanel {
         createMiddleUI();
 
         createBottomUI();
+
+        update();
     }
 
     private void createTopUI() {
@@ -54,8 +58,8 @@ public class TeachersTab extends JPanel {
     }
 
     private void createMiddleUI() {
-        DefaultTableModel tableModel = new DefaultTableModel(new String[][]{}, new String[]
-                {"Идентификатор", "ФИО", "Пасспорт", "Опыт", "Образование", "Номер телефона"}){
+        tableModel = new DefaultTableModel(new String[][]{}, new String[]
+                {"Идентификатор", "ФИО", "Пасспорт", "Опыт", "Образование", "Номер телефона", "Классное руководство"}){
             @Override
             public Class<String> getColumnClass(int columnIndex) {
                 return String.class;
@@ -64,8 +68,8 @@ public class TeachersTab extends JPanel {
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
-        };;
-        JTable teachersTable = new JTable(tableModel);
+        };
+        teachersTable = new JTable(tableModel);
 
         teachersTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         teachersTable.getTableHeader().setReorderingAllowed(false);
@@ -95,16 +99,39 @@ public class TeachersTab extends JPanel {
                 GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL,
                 new Insets(0, 0, 10, 100), 0, 0));
 
+        JTextField fullNameTextField = new JTextField(50);
+        JTextField passportTextField = new JTextField(50);
+        JTextField experienceTextField = new JTextField(50);
+        JTextField educationTextField = new JTextField(50);
+        JTextField phoneTextField = new JTextField(50);
+
         addButton.addActionListener(listener -> {
-            addNewTeacherButtonIsClicked();
+            createAddNewEditButtonUI(TeachersDao::add, -1, fullNameTextField, passportTextField,
+                    experienceTextField, educationTextField, phoneTextField);
+            update();
+        });
+
+        editButton.addActionListener(listener -> {
+            int selectedRow = teachersTable.getSelectedRow();
+            fullNameTextField.setText((String)teachersTable.getValueAt(selectedRow, 1));
+            passportTextField.setText((String)teachersTable.getValueAt(selectedRow, 2));
+            experienceTextField.setText((String)teachersTable.getValueAt(selectedRow, 3));
+            educationTextField.setText((String)teachersTable.getValueAt(selectedRow, 4));
+            phoneTextField.setText((String)teachersTable.getValueAt(selectedRow, 5));
+            createAddNewEditButtonUI(TeachersDao::update, selectedRow, fullNameTextField, passportTextField,
+                    experienceTextField, educationTextField, phoneTextField);
+            update();
+        });
+
+        deleteButton.addActionListener(listener -> {
+            Long id = (Long)teachersTable.getValueAt(teachersTable.getSelectedRow(), 0);
+            TeachersDao.delete(id);
+            update();
         });
     }
-
-    private void addNewTeacherButtonIsClicked() {
-        createAddNewButtonUI();
-    }
-
-    private void createAddNewButtonUI() {
+    private void createAddNewEditButtonUI(Consumer<Teacher> function, int selectedRow, JTextField fullNameTextField,
+                                          JTextField passportTextField, JTextField experienceTextField,
+                                          JTextField educationTextField, JTextField phoneTextField) {
         JFrame frame = new JFrame();
         JDialog addDialog = new JDialog(frame, "Добавление нового учителя", true);
         addDialog.setSize(500, 400);
@@ -117,26 +144,27 @@ public class TeachersTab extends JPanel {
         JLabel experienceLabel = new JLabel("Опыт работы");
         JLabel educationLabel = new JLabel("Образование");
         JLabel phoneLabel = new JLabel("Телефон");
-        JLabel classLabel = new JLabel("Классное руководство");
-
-        JTextField fullNameTextField = new JTextField(50);
 
         JComboBox<Subject> subjectComboBox = new JComboBox<>();
-        for(Subject subject : getSubjectsFromDatabase()) {
+        for(Subject subject : SubjectDao.getAll()) {
             subjectComboBox.addItem(subject);
         }
 
-        JTextField passportTextField = new JTextField(50);
-        JTextField experienceTextField = new JTextField(50);
-        JTextField educationTextField = new JTextField(50);
-        JTextField phoneTextField = new JTextField(50);
-        JTextField schoolClassTextField = new JTextField(50);
+        JButton addEditTeacherButton = new JButton("Продолжить");
 
-        JButton addTeacherButton = new JButton("Добавить учителя");
+        addEditTeacherButton.addActionListener(listener -> {
+            Teacher teacher = new Teacher();
 
-        addTeacherButton.addActionListener(listener -> {
-            addToDatabase(fullNameTextField.getText(), ((Subject)subjectComboBox.getSelectedItem()).getId(), passportTextField.getText(), experienceTextField.getText(),
-                    educationTextField.getText(), phoneTextField.getText() /*schoolClass*/);
+            if(selectedRow != -1) {
+                teacher.setId((Long) teachersTable.getValueAt(selectedRow, 0));
+            }
+            teacher.setTeacherName(fullNameTextField.getText());
+            teacher.setSubjectId(((Subject) Objects.requireNonNull(subjectComboBox.getSelectedItem())).getId());
+            teacher.setPassport(passportTextField.getText());
+            teacher.setWorkExperience(experienceTextField.getText());
+            teacher.setEducation(educationTextField.getText());
+            teacher.setPhoneNumber(phoneTextField.getText());
+            function.accept(teacher);
         });
 
         addDialog.add(fullNameLabel,new GridBagConstraints(0, 0, 1, 1, 1, 0,
@@ -181,35 +209,19 @@ public class TeachersTab extends JPanel {
                 GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
                 new Insets(0, -50, 10, 100), 0, 0));
 
-        addDialog.add(classLabel,new GridBagConstraints(0, 6, 1, 1, 1, 1,
-                GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
-                new Insets(0, 100, 10, 0), 0, 0));
-        addDialog.add(schoolClassTextField,new GridBagConstraints(1, 6, 1, 1, 1, 1,
-                GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
-                new Insets(0, -50, 10, 100), 0, 0));
-
-        addDialog.add(addTeacherButton,new GridBagConstraints(0, 7, 2, 1, 1, 0,
+        addDialog.add(addEditTeacherButton,new GridBagConstraints(0, 7, 2, 1, 1, 0,
                 GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
                 new Insets(0, 100, 50, 100), 0, 0));
 
         addDialog.setVisible(true);
     }
 
-    private void addToDatabase(String name, Long subjectId, String passport, String workExperience,
-                               String education, String phone /*Long schoolClassId*/) {
-        Teacher teacher = new Teacher();
-        teacher.setTeacherName(name);
-        teacher.setSubjectId(subjectId);
-        teacher.setPassport(passport);
-        teacher.setWorkExperience(workExperience);
-        teacher.setEducation(education);
-        teacher.setPhoneNumber(phone);
-        //teacher.setClassId(schoolClassId);
 
-        TeachersDao.add(teacher);
-    }
-
-    private java.util.List<Subject> getSubjectsFromDatabase() {
-        return SubjectDao.getAll();
+    public void update() {
+        tableModel.setRowCount(0);
+        for (Teacher teacher : TeachersDao.getAll()) {
+            tableModel.addRow(new Object[]{teacher.getId(), teacher.getTeacherName(), teacher.getPassport(),
+            teacher.getWorkExperience(), teacher.getEducation(), teacher.getPhoneNumber()});
+        }
     }
 }
