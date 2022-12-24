@@ -1,4 +1,4 @@
-package ru.project.schoolInfoSystem.database;
+package ru.project.schoolInfoSystem.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
