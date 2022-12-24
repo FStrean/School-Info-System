@@ -26,7 +26,7 @@ public class StudentsDao {
         preparedStatement.setLong(6, student.getClassId());
     }
 
-    public static void add(Student student) {
+    public static int add(Student student) {
         String query = "INSERT INTO students(student_name, address, birthdate, parent_name, phone_number, class_id) " +
                 "VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -34,7 +34,7 @@ public class StudentsDao {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             initStatement(preparedStatement, student);
 
-            preparedStatement.executeQuery();
+            return preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -49,7 +49,7 @@ public class StudentsDao {
             initStatement(preparedStatement, student);
             preparedStatement.setLong(7, student.getId());
 
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -60,28 +60,31 @@ public class StudentsDao {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setLong(1, id);
-            preparedStatement.executeQuery();
+
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static List<Student> getStudents() {
+    public static List<Student> getAll() {
         String query = "SELECT * FROM students";
         try {
-            PreparedStatement preparedStudentStatement = connection.prepareStatement(query);
-            ResultSet resultStudentSet = preparedStudentStatement.executeQuery();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
             List<Student> students = new ArrayList<>();
 
-            while(resultStudentSet.next()) {
+            while(resultSet.next()) {
                 Student student = new Student();
-                student.setId(resultStudentSet.getLong("id"));
-                student.setStudentName(resultStudentSet.getString("student_name"));
-                student.setAddress(resultStudentSet.getString("address"));
-                student.setBirthdate(resultStudentSet.getDate("birthdate"));
-                student.setParentName(resultStudentSet.getString("parent_name"));
-                student.setPhoneNumber(resultStudentSet.getString("phone_number"));
-                student.setClassId(resultStudentSet.getLong("class_id"));
+                student.setId(resultSet.getLong("id"));
+                student.setStudentName(resultSet.getString("student_name"));
+                student.setAddress(resultSet.getString("address"));
+                student.setBirthdate(resultSet.getDate("birthdate"));
+                student.setParentName(resultSet.getString("parent_name"));
+                student.setPhoneNumber(resultSet.getString("phone_number"));
+                student.setClassId(resultSet.getLong("class_id"));
+
+                students.add(student);
             }
 
             return students;

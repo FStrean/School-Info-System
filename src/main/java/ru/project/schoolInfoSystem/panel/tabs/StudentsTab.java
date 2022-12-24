@@ -1,9 +1,19 @@
 package ru.project.schoolInfoSystem.panel.tabs;
 
+import org.jdatepicker.DateLabelFormatter;
+import org.jdatepicker.JDatePanel;
+import org.jdatepicker.JDatePicker;
+import org.jdatepicker.UtilDateModel;
+import ru.project.schoolInfoSystem.dao.StudentsDao;
+import ru.project.schoolInfoSystem.model.Student;
 import ru.project.schoolInfoSystem.panel.TableModel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 
 public class StudentsTab extends JPanel {
 
@@ -75,13 +85,27 @@ public class StudentsTab extends JPanel {
             JLabel studentClassLabel = new JLabel("Класс");
 
             JTextField nameTextField1 = new JTextField(50);
-            JTextField birthdayTextField = new JTextField(50);
+
+
+            JDatePicker birthdayTextField = new JDatePicker();
+            birthdayTextField.setTextEditable(true);
+
             JTextField addressTextField = new JTextField(50);
             JTextField parentsTextField = new JTextField(50);
             JTextField phoneTextField = new JTextField(50);
             JTextField classTextField1 = new JTextField(50);
 
             JButton addStudentButton = new JButton("Добавить ученика");
+            addStudentButton.addActionListener(listener -> {
+                Student student = new Student();
+                student.setStudentName(nameTextField1.getText());
+                student.setBirthdate(new Date(((GregorianCalendar)birthdayTextField.getModel().getValue()).getTimeInMillis()));
+                student.setAddress(student.getAddress());
+                student.setParentName(student.getParentName());
+                student.setPhoneNumber(student.getPhoneNumber());
+                student.setClassId(student.getClassId());
+                StudentsDao.add(student);
+            });
 
             addDialog.add(fullNameLabel,new GridBagConstraints(0, 0, 1, 1, 1, 0,
                     GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
@@ -128,8 +152,6 @@ public class StudentsTab extends JPanel {
             addDialog.add(addStudentButton,new GridBagConstraints(0, 6, 2, 1, 1, 0,
                     GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
                     new Insets(0, 100, 50, 100), 0, 0));
-
-
 
             addDialog.setVisible(true);
         });

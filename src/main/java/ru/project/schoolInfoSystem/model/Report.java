@@ -6,10 +6,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class Report {
-
-}
+//@Getter
+//@Setter
+//@NoArgsConstructor
+//@AllArgsConstructor
+//public class Report {
+//
+//}

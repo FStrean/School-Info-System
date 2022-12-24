@@ -14,6 +14,8 @@ public class Teacher {
 
     private String teacherName;
 
+    private Long subjectId;
+
     private String passport;
 
     private String workExperience;
