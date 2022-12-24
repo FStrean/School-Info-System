@@ -30,3 +30,25 @@ CREATE TABLE students (
                         phone_number VARCHAR(25) NOT NULL CHECK(length(phone_number)>0),
                         class_id BIGINT NOT NULL REFERENCES classes(id)
 );
+
+CREATE TABLE reports (
+                        id BIGSERIAL NOT NULL PRIMARY KEY,
+                        report_date DATE NOT NULL,
+                        students_count INTEGER NOT NULL,
+                        teachers_count INTEGER NOT NULL,
+                        classes_count INTEGER NOT NULL,
+                        classroom_count INTEGER NOT NULL,
+                        average_grades NUMERIC NOT NULL,
+                        excellent_count INTEGER NOT NULL,
+                        good_count INTEGER NOT NULL,
+                        failure_count INTEGER NOT NULL,
+                        underachiever_count INTEGER NOT NULL
+);
+
+CREATE TABLE grades (
+                        id BIGSERIAL NOT NULL PRIMARY KEY,
+                        mark INTEGER NOT NULL,
+                        student_id BIGINT NOT NULL REFERENCES students(id),
+                        subject_id BIGINT NOT NULL REFERENCES subjects(id)
+);
+
