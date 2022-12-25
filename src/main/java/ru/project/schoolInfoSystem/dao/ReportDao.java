@@ -111,7 +111,7 @@ public class ReportDao {
     }
 
     public static int generateExcellentCount() {
-        String query = "SELECT COUNT(*) FROM students JOIN grades ON students.id=grades.student_id WHERE grades.mark='5'";
+        String query = "SELECT COUNT(Distinct students.id) FROM students JOIN grades ON students.id=grades.student_id WHERE grades.mark='5'";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -128,7 +128,7 @@ public class ReportDao {
     }
 
     public static int generateGoodCount() {
-        String query = "SELECT COUNT(*) FROM students JOIN grades ON students.id=grades.student_id WHERE grades.mark='4'";
+        String query = "SELECT COUNT(Distinct students.id) FROM students JOIN grades ON students.id=grades.student_id WHERE grades.mark='4'";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -145,7 +145,7 @@ public class ReportDao {
     }
 
     public static int generateFailureCount() {
-        String query = "SELECT COUNT(*) FROM students JOIN grades ON students.id=grades.student_id WHERE grades.mark='3'";
+        String query = "SELECT COUNT(Distinct students.id) FROM students JOIN grades ON students.id=grades.student_id WHERE grades.mark='3'";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -162,7 +162,7 @@ public class ReportDao {
     }
 
     public static int generateUnderachieverCount() {
-        String query = "SELECT COUNT(*) FROM students JOIN grades ON students.id=grades.student_id WHERE grades.mark='2'";
+        String query = "SELECT COUNT(Distinct students.id) FROM students JOIN grades ON students.id=grades.student_id WHERE grades.mark='2'";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
