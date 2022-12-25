@@ -1,6 +1,7 @@
 package ru.project.schoolInfoSystem.dao;
 
 import ru.project.schoolInfoSystem.model.Class;
+import ru.project.schoolInfoSystem.model.Teacher;
 import ru.project.schoolInfoSystem.util.DatabaseConnection;
 
 import java.sql.Connection;
@@ -77,6 +78,26 @@ public class ClassesDao {
             }
 
             return classes;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static Class get(Long id) {
+        String query = "SELECT * FROM classes WHERE id=?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setLong(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            Class schoolClass = new Class();
+            while(resultSet.next()) {
+                schoolClass.setId(resultSet.getLong("id"));
+                schoolClass.setNumber(resultSet.getString("number"));
+                schoolClass.setCabinet(resultSet.getString("cabinet"));
+                schoolClass.setTeacherId(resultSet.getLong("teacher_id"));
+            }
+
+            return schoolClass;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
