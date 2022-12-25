@@ -68,8 +68,12 @@ public class ClassesTab extends PanelTab {
         JTextField numberTextField = new JTextField(50);
         JTextField cabinetTextField = new JTextField(50);
 
-        addButton.addActionListener(listener ->
-                createPopUpWindow(ClassesDao::add, -1, numberTextField, cabinetTextField));
+        addButton.addActionListener(listener ->{
+            numberTextField.setText("");
+            cabinetTextField.setText("");
+            teachersComboBox.setSelectedIndex(0);
+            createPopUpWindow(ClassesDao::add, -1, numberTextField, cabinetTextField);
+        });
 
         editButton.addActionListener(listener -> {
             int selectedRow = table.getSelectedRow();
@@ -87,7 +91,7 @@ public class ClassesTab extends PanelTab {
 
         deleteButton.addActionListener(listener -> {
             Long id = (Long)table.getValueAt(table.getSelectedRow(), 0);
-            TeachersDao.delete(id);
+            ClassesDao.delete(id);
             update();
         });
     }

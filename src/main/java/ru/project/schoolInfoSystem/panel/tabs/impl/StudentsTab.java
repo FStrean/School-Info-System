@@ -3,7 +3,6 @@ package ru.project.schoolInfoSystem.panel.tabs.impl;
 import org.jdatepicker.JDatePicker;
 import ru.project.schoolInfoSystem.dao.ClassesDao;
 import ru.project.schoolInfoSystem.dao.StudentsDao;
-import ru.project.schoolInfoSystem.dao.TeachersDao;
 import ru.project.schoolInfoSystem.model.Class;
 import ru.project.schoolInfoSystem.model.Student;
 import ru.project.schoolInfoSystem.panel.tabs.PanelTab;
@@ -16,6 +15,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Objects;
 import java.util.function.Consumer;
+
+
 public class StudentsTab extends PanelTab {
 
     private final JComboBox<Class> classComboBox;
@@ -76,9 +77,16 @@ public class StudentsTab extends PanelTab {
         JTextField parentName = new JTextField(50);
         JTextField phoneNumber = new JTextField(50);
 
-        addButton.addActionListener(listener ->
-                createPopUpWindow(StudentsDao::add, -1, studentName, birthdayDatePicker, address,
-                        parentName, phoneNumber));
+        addButton.addActionListener(listener -> {
+            studentName.setText("");
+            birthdayDatePicker.getModel().setSelected(false);
+            address.setText("");
+            parentName.setText("");
+            phoneNumber.setText("");
+            classComboBox.setSelectedIndex(0);
+            createPopUpWindow(StudentsDao::add, -1, studentName, birthdayDatePicker, address,
+                parentName, phoneNumber);
+        });
 
         editButton.addActionListener(listener -> {
             int selectedRow = table.getSelectedRow();
@@ -108,7 +116,7 @@ public class StudentsTab extends PanelTab {
 
         deleteButton.addActionListener(listener -> {
             Long id = (Long)table.getValueAt(table.getSelectedRow(), 0);
-            TeachersDao.delete(id);
+            StudentsDao.delete(id);
             update();
         });
     }

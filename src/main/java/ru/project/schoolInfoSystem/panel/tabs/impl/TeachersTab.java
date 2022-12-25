@@ -72,9 +72,16 @@ public class TeachersTab extends PanelTab {
         JTextField educationTextField = new JTextField(50);
         JTextField phoneTextField = new JTextField(50);
 
-        addButton.addActionListener(listener ->
-                createPopUpWindow(TeachersDao::add, -1, fullNameTextField, passportTextField,
-                experienceTextField, educationTextField, phoneTextField));
+        addButton.addActionListener(listener -> {
+            fullNameTextField.setText("");
+            passportTextField.setText("");
+            experienceTextField.setText("");
+            educationTextField.setText("");
+            phoneTextField.setText("");
+            subjectComboBox.setSelectedIndex(0);
+            createPopUpWindow(TeachersDao::add, -1, fullNameTextField, passportTextField,
+                    experienceTextField, educationTextField, phoneTextField);
+        });
 
         editButton.addActionListener(listener -> {
             int selectedRow = table.getSelectedRow();
