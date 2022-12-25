@@ -95,6 +95,24 @@ public class TeachersDao {
         }
     }
 
+
+    public static Teacher findByName(String name) {
+        String query = "SELECT * FROM teachers WHERE teacher_name=?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, name);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            Teacher teacher = null;
+            while(resultSet.next()) {
+                teacher = getFromResultSet(resultSet);
+            }
+            return teacher;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
     public static Class getTeacherClass(Teacher teacher) {
         String query = "SELECT * FROM classes WHERE teacher_id=?";
         try {
@@ -115,6 +133,7 @@ public class TeachersDao {
         }
     }
 
+
     private static Teacher getFromResultSet(ResultSet resultSet) throws SQLException {
         Teacher teacher = new Teacher();
         teacher.setId(resultSet.getLong("id"));
@@ -123,6 +142,7 @@ public class TeachersDao {
         teacher.setWorkExperience(resultSet.getString("work_experience"));
         teacher.setEducation(resultSet.getString("education"));
         teacher.setPhoneNumber(resultSet.getString("phone_number"));
+        teacher.setSubjectId(resultSet.getLong("subject_id"));
 
         return teacher;
     }

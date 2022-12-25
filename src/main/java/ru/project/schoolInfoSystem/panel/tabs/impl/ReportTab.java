@@ -2,19 +2,18 @@ package ru.project.schoolInfoSystem.panel.tabs.impl;
 
 import ru.project.schoolInfoSystem.dao.ReportDao;
 import ru.project.schoolInfoSystem.model.Report;
+import ru.project.schoolInfoSystem.panel.tabs.PanelTab;
 
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.math.*;
 import java.sql.Date;
-import java.text.DecimalFormat;
 
 import static ru.project.schoolInfoSystem.dao.ReportDao.*;
 
 
-public class ReportTab extends JPanel {
+public class ReportTab extends PanelTab {
 
     private JTable reportsTable;
     private DefaultTableModel tableModel;
@@ -22,16 +21,17 @@ public class ReportTab extends JPanel {
     public ReportTab() {
         setLayout(new GridBagLayout());
 
-        createTopUI();
+        createTop();
 
-        createMiddleUI();
+        createTable();
 
-        createBottomUI();
+        createBottom();
 
         update();
     }
 
-    private void createTopUI() {
+    @Override
+    protected void createTop() {
         JLabel dateLabel = new JLabel("Дата составления");
         JTextField dateTextField = new JTextField();
 
@@ -48,7 +48,8 @@ public class ReportTab extends JPanel {
                 new Insets(20, 10, 10, 100), 0, 0));
     }
 
-    private void createMiddleUI() {
+    @Override
+    protected void createTable() {
         tableModel = new DefaultTableModel(new String[][]{}, new String[]
                 {"Id", "Дата", "Всего учеников", "Всего учителей", "Кабинеты", "Срений балл", "Отличники", "Хорошисты", "Троечники", "Двоечники"}){
             @Override
@@ -74,7 +75,8 @@ public class ReportTab extends JPanel {
 
     }
 
-    private void createBottomUI() {
+    @Override
+    protected void createBottom() {
         JButton generateButton = new JButton("Сгенерировать отчет");
         JButton printButton = new JButton("Напечатать отчет");
         JButton editButton = new JButton("Редактировать");

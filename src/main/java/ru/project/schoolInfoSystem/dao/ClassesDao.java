@@ -102,4 +102,25 @@ public class ClassesDao {
             throw new RuntimeException(e);
         }
     }
+
+
+    public static Class findByNumber(String number) {
+        String query = "SELECT * FROM classes WHERE number=?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, number);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            Class schoolClass = new Class();
+            while(resultSet.next()) {
+                schoolClass.setId(resultSet.getLong("id"));
+                schoolClass.setNumber(resultSet.getString("number"));
+                schoolClass.setCabinet(resultSet.getString("cabinet"));
+                schoolClass.setTeacherId(resultSet.getLong("teacher_id"));
+            }
+
+            return schoolClass;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -44,7 +44,7 @@ public class TeachersTab extends PanelTab {
     @Override
     protected void createTable() {
         tableModel = new DefaultTableModel(new String[][]{}, new String[]
-                {"Идентификатор", "ФИО", "Пасспорт", "Опыт", "Образование", "Номер телефона", "Классное руководство"}){
+                {"Идентификатор", "ФИО", "Пасспорт", "Опыт", "Образование", "Номер телефона", "Классное руководство", "Предмет"}){
             @Override
             public Class<?> getColumnClass(int columnIndex) {
                 return String.class;
@@ -84,6 +84,8 @@ public class TeachersTab extends PanelTab {
                 experienceTextField.setText((String) table.getValueAt(selectedRow, 3));
                 educationTextField.setText((String) table.getValueAt(selectedRow, 4));
                 phoneTextField.setText((String) table.getValueAt(selectedRow, 5));
+                Subject subject = SubjectDao.findByName((String) table.getValueAt(selectedRow, 7));
+                subjectComboBox.getModel().setSelectedItem(subject);
                 createPopUpWindow(TeachersDao::update, selectedRow, fullNameTextField, passportTextField,
                         experienceTextField, educationTextField, phoneTextField);
                 update();
@@ -148,9 +150,11 @@ public class TeachersTab extends PanelTab {
         tableModel.setRowCount(0);
         for (Teacher teacher : TeachersDao.getAll()) {
             String schoolClass = TeachersDao.getTeacherClass(teacher).getNumber();
+            Subject subject = SubjectDao.get(teacher.getSubjectId());
 
             tableModel.addRow(new Object[]{teacher.getId(), teacher.getTeacherName(), teacher.getPassport(),
-            teacher.getWorkExperience(), teacher.getEducation(), teacher.getPhoneNumber(), schoolClass != null ? schoolClass : ""});
+            teacher.getWorkExperience(), teacher.getEducation(), teacher.getPhoneNumber(), schoolClass != null ? schoolClass : "",
+                    subject.getSubjectName()});
         }
     }
 }

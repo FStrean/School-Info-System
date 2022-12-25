@@ -12,7 +12,6 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.sql.Date;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Objects;
@@ -98,13 +97,8 @@ public class StudentsTab extends PanelTab {
                 parentName.setText((String) table.getValueAt(selectedRow, 4));
                 phoneNumber.setText((String) table.getValueAt(selectedRow, 5));
 
-                /*
-                 *TODO: check work of this part (if student's class will be in combobox when i try to edit this student)
-                 */
-                String schoolClass = (String) table.getValueAt(selectedRow, 6);
-                classComboBox.setSelectedItem(Arrays.stream(classComboBox.getSelectedObjects()).filter(object ->
-                        Objects.equals((object).toString(), schoolClass)
-                ));
+                Class schoolClass = ClassesDao.findByNumber((String) table.getValueAt(selectedRow, 6));
+                classComboBox.getModel().setSelectedItem(schoolClass);
 
                 createPopUpWindow(StudentsDao::update, selectedRow, studentName, birthdayDatePicker,
                         address, parentName, phoneNumber);

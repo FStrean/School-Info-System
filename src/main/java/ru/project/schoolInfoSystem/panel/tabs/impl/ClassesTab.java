@@ -9,8 +9,6 @@ import ru.project.schoolInfoSystem.panel.tabs.PanelTab;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -78,10 +76,9 @@ public class ClassesTab extends PanelTab {
             if(selectedRow != -1) {
                 numberTextField.setText((String) table.getValueAt(selectedRow, 1));
                 cabinetTextField.setText((String) table.getValueAt(selectedRow, 2));
-                String teacher = (String) table.getValueAt(selectedRow, 3);
-                teachersComboBox.setSelectedItem(Arrays.stream(teachersComboBox.getSelectedObjects()).filter(object ->
-                        Objects.equals((object).toString(), teacher)
-                ));
+
+                Teacher teacher = TeachersDao.findByName((String) table.getValueAt(selectedRow, 3));
+                teachersComboBox.getModel().setSelectedItem(teacher);
 
                 createPopUpWindow(ClassesDao::update, selectedRow, numberTextField, cabinetTextField);
                 update();
