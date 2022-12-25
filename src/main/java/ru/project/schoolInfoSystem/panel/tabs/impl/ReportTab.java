@@ -20,11 +20,9 @@ public class ReportTab extends PanelTab {
 
     public ReportTab() {
         setLayout(new GridBagLayout());
-
         createTop();
         createTable();
         createBottom();
-
         update();
     }
 
@@ -93,9 +91,6 @@ public class ReportTab extends PanelTab {
         add(deleteButton, new GridBagConstraints(3, 3, 1, 1, 1, 0,
                 GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL,
                 new Insets(0, 0, 10, 100), 0, 0));
-
-
-
 
         deleteButton.addActionListener(listener -> {
             Long id = (Long)reportsTable.getValueAt(reportsTable.getSelectedRow(), 0);

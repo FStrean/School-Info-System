@@ -108,16 +108,20 @@ public class GradesTab extends PanelTab {
 
 
         addButton.addActionListener(listener -> {
+            fullNameTextField.setText("");
+            gradeTextField.setText("");
             createAddNewEditButtonUI(GradesDao::add, -1, fullNameTextField, gradeTextField);
             update();
         });
 
         editButton.addActionListener(listener -> {
             int selectedRow = gradesTable.getSelectedRow();
-            fullNameTextField.setText((String)gradesTable.getValueAt(selectedRow, 1));
-            gradeTextField.setText((String)gradesTable.getValueAt(selectedRow, 2));
-            Subject subject = SubjectDao.findByName((String) table.getValueAt(selectedRow, 3));
+            fullNameTextField.setText((String) gradesTable.getValueAt(selectedRow, 1));
+            fullNameTextField.setEnabled(false);
+            gradeTextField.setText((String) gradesTable.getValueAt(selectedRow, 3));
+            Subject subject = SubjectDao.findByName((String) gradesTable.getValueAt(selectedRow, 2));
             subjectComboBox.getModel().setSelectedItem(subject);
+
             createAddNewEditButtonUI(GradesDao::update, selectedRow, fullNameTextField, gradeTextField);
             update();
         });
@@ -157,6 +161,8 @@ public class GradesTab extends PanelTab {
             grades.setSubjectId(((Subject) Objects.requireNonNull(subjectComboBox.getSelectedItem())).getId());
             grades.setMark(Integer.parseInt(gradeTextField.getText()));
             function.accept(grades);
+            update();
+            frame.dispose();
         });
 
         addDialog.add(fullNameLabel,new GridBagConstraints(0, 0, 1, 1, 1, 0,
@@ -189,6 +195,9 @@ public class GradesTab extends PanelTab {
     }
 
     public void update() {
+        for(Subject subject : SubjectDao.getAll()) {
+            subjectComboBox.addItem(subject);
+        }
         tableModel.setRowCount(0);
         for (GradesDto grades : GradesDao.getAll()) {
             tableModel.addRow(new Object[]{grades.getId(), grades.getStudentName(), grades.getSubjectName(),
