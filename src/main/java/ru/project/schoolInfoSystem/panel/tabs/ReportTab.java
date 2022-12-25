@@ -7,9 +7,7 @@ import ru.project.schoolInfoSystem.model.Report;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.math.*;
 import java.sql.Date;
-import java.text.DecimalFormat;
 
 import static ru.project.schoolInfoSystem.dao.ReportDao.*;
 
@@ -22,16 +20,16 @@ public class ReportTab extends JPanel {
     public ReportTab() {
         setLayout(new GridBagLayout());
 
-        createTopUI();
+        createTop();
 
-        createMiddleUI();
+        createMiddle();
 
-        createBottomUI();
+        createBottom();
 
         update();
     }
 
-    private void createTopUI() {
+    private void createTop() {
         JLabel dateLabel = new JLabel("Дата составления");
         JTextField dateTextField = new JTextField();
 
@@ -48,7 +46,7 @@ public class ReportTab extends JPanel {
                 new Insets(20, 10, 10, 100), 0, 0));
     }
 
-    private void createMiddleUI() {
+    private void createMiddle() {
         tableModel = new DefaultTableModel(new String[][]{}, new String[]
                 {"Id", "Дата", "Всего учеников", "Всего учителей", "Кабинеты", "Срений балл", "Отличники", "Хорошисты", "Троечники", "Двоечники"}){
             @Override
@@ -74,7 +72,7 @@ public class ReportTab extends JPanel {
 
     }
 
-    private void createBottomUI() {
+    private void createBottom() {
         JButton generateButton = new JButton("Сгенерировать отчет");
         JButton printButton = new JButton("Напечатать отчет");
         JButton editButton = new JButton("Редактировать");
@@ -112,7 +110,7 @@ public class ReportTab extends JPanel {
             int studentsCount = generateStudentsCount();
             int teachersCount = generateTeachersCount();
             int classesCount = generateClassesCount();
-            int classroomCounts = 10 + (int) (Math.random() * 40);
+            int classroomCounts = 46;
 
             float averageGrades = generateAverageGrade();
 

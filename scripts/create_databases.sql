@@ -28,7 +28,7 @@ CREATE TABLE students (
                         address VARCHAR(200) NOT NULL CHECK(length(address)>0),
                         parent_name VARCHAR(100) NOT NULL CHECK(length(parent_name)>0),
                         phone_number VARCHAR(25) NOT NULL CHECK(length(phone_number)>0),
-                        class_id BIGINT NOT NULL REFERENCES classes(id)
+                        class_id BIGINT NOT NULL REFERENCES classes(id) ON DELETE CASCADE
 );
 
 CREATE TABLE reports (
@@ -47,8 +47,8 @@ CREATE TABLE reports (
 
 CREATE TABLE grades (
                         id BIGSERIAL NOT NULL PRIMARY KEY,
-                        mark INTEGER NOT NULL,
-                        student_id BIGINT NOT NULL REFERENCES students(id),
-                        subject_id BIGINT NOT NULL REFERENCES subjects(id)
+                        student_id BIGINT NOT NULL REFERENCES students(id) ON DELETE CASCADE,
+                        subject_id BIGINT NOT NULL REFERENCES subjects(id),
+                        mark INTEGER NOT NULL
 );
 
