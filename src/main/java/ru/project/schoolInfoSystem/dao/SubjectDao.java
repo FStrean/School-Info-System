@@ -34,4 +34,40 @@ public class SubjectDao {
             throw new RuntimeException(e);
         }
     }
+
+    public static Subject get(Long id) {
+        String query = "SELECT * FROM subjects WHERE id=?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setLong(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            Subject subject = new Subject();
+            while(resultSet.next()) {
+                subject.setId(resultSet.getLong("id"));
+                subject.setSubjectName(resultSet.getString("subject_name"));
+            }
+
+            return subject;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static Subject findByName(String name) {
+        String query = "SELECT * FROM subjects WHERE subject_name=?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, name);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            Subject subject = new Subject();
+            while(resultSet.next()) {
+                subject.setId(resultSet.getLong("id"));
+                subject.setSubjectName(resultSet.getString("subject_name"));
+            }
+
+            return subject;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

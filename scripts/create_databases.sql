@@ -1,6 +1,6 @@
 CREATE TABLE subjects (
-                        id BIGSERIAL NOT NULL PRIMARY KEY,
-                        subject_name VARCHAR(50) NOT NULL CHECK(length(subject_name)>0)
+                          id BIGSERIAL NOT NULL PRIMARY KEY,
+                          subject_name VARCHAR(50) NOT NULL CHECK(length(subject_name)>0)
 );
 
 CREATE TABLE teachers (
@@ -32,17 +32,17 @@ CREATE TABLE students (
 );
 
 CREATE TABLE reports (
-                        id BIGSERIAL NOT NULL PRIMARY KEY,
-                        report_date DATE NOT NULL,
-                        students_count INTEGER NOT NULL,
-                        teachers_count INTEGER NOT NULL,
-                        classes_count INTEGER NOT NULL,
-                        classroom_count INTEGER NOT NULL,
-                        average_grades NUMERIC NOT NULL,
-                        excellent_count INTEGER NOT NULL,
-                        good_count INTEGER NOT NULL,
-                        failure_count INTEGER NOT NULL,
-                        underachiever_count INTEGER NOT NULL
+                         id BIGSERIAL NOT NULL PRIMARY KEY,
+                         report_date DATE NOT NULL,
+                         students_count INTEGER NOT NULL,
+                         teachers_count INTEGER NOT NULL,
+                         classes_count INTEGER NOT NULL,
+                         classroom_count INTEGER NOT NULL,
+                         average_grades NUMERIC NOT NULL,
+                         excellent_count INTEGER NOT NULL,
+                         good_count INTEGER NOT NULL,
+                         failure_count INTEGER NOT NULL,
+                         underachiever_count INTEGER NOT NULL
 );
 
 CREATE TABLE grades (
@@ -51,4 +51,3 @@ CREATE TABLE grades (
                         subject_id BIGINT NOT NULL REFERENCES subjects(id),
                         mark INTEGER NOT NULL
 );
-

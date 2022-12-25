@@ -1,4 +1,4 @@
-package ru.project.schoolInfoSystem.panel.tabs;
+package ru.project.schoolInfoSystem.panel.tabs.impl;
 
 import ru.project.schoolInfoSystem.panel.TableModel;
 

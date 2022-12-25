@@ -18,4 +18,9 @@ public class Class {
     private String cabinet;
 
     private Long teacherId;
+
+    @Override
+    public String toString() {
+        return number;
+    }
 }

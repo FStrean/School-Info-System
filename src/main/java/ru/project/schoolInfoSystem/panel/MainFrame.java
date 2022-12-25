@@ -1,6 +1,7 @@
 package ru.project.schoolInfoSystem.panel;
 
-import ru.project.schoolInfoSystem.panel.tabs.*;
+import ru.project.schoolInfoSystem.panel.tabs.PanelTab;
+import ru.project.schoolInfoSystem.panel.tabs.impl.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,13 +34,16 @@ public class MainFrame extends JFrame {
         ReportTab reportTab = new ReportTab();
         GradesTab gradesTab = new GradesTab();
 
+        tabs.addChangeListener(changeEvent -> {
+            ((PanelTab)tabs.getSelectedComponent()).update();
+        });
+
         tabs.addTab("Ученики", studentsTab);
         tabs.addTab("Учителя", teachersTab);
         tabs.addTab("Классы", classesTab);
         tabs.addTab("Расписание", timetableTab);
         tabs.addTab("Отчет", reportTab);
         tabs.addTab("Оценки", gradesTab);
-
 
         setVisible(true);
     }

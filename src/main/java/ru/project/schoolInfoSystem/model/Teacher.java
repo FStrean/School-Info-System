@@ -24,4 +24,9 @@ public class Teacher {
     private String education;
 
     private String phoneNumber;
+
+    @Override
+    public String toString() {
+        return teacherName;
+    }
 }
