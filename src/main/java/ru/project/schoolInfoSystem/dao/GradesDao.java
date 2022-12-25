@@ -21,9 +21,12 @@ public class GradesDao {
     }
 
     public static Long findStudentId(String name) {
-        String query = "SELECT id FROM students WHERE student_name=?";
+        System.out.println(name);
+        String query = "SELECT id FROM students WHERE student_name = ?";
+        System.out.println(query);
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, name);
             ResultSet resultSet = preparedStatement.executeQuery();
             Long studentId = 0L;
 

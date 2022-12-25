@@ -2,11 +2,10 @@ package ru.project.schoolInfoSystem.panel.tabs.impl;
 
 import ru.project.schoolInfoSystem.dao.GradesDao;
 import ru.project.schoolInfoSystem.dao.SubjectDao;
-import ru.project.schoolInfoSystem.dao.TeachersDao;
 import ru.project.schoolInfoSystem.dto.GradesDto;
 import ru.project.schoolInfoSystem.model.Grades;
 import ru.project.schoolInfoSystem.model.Subject;
-import ru.project.schoolInfoSystem.model.Teacher;
+import ru.project.schoolInfoSystem.panel.tabs.PanelTab;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -16,24 +15,23 @@ import java.util.function.Consumer;
 
 import static ru.project.schoolInfoSystem.dao.GradesDao.findStudentId;
 
-public class GradesTab extends JPanel {
+public class GradesTab extends PanelTab {
 
     private JTable gradesTable;
     private DefaultTableModel tableModel;
+    private final JComboBox<Subject> subjectComboBox;
 
     public GradesTab() {
+        subjectComboBox = new JComboBox<>();
         setLayout(new GridBagLayout());
-
-        createTopUI();
-
-        createMiddleUI();
-
-        createBottomUI();
-
+        createTop();
+        createTable();
+        createBottom();
         update();
     }
 
-    private void createTopUI() {
+    @Override
+    protected void createTop() {
         JLabel classLabel = new JLabel("Номер класса");
         JLabel subjectLabel = new JLabel("Предмет");
 
@@ -61,7 +59,8 @@ public class GradesTab extends JPanel {
         searchPanel.add(searchButton, BorderLayout.CENTER);
     }
 
-    private void createMiddleUI() {
+    @Override
+    protected void createTable() {
         tableModel = new DefaultTableModel(new String[][]{}, new String[]
                 {"Id", "ФИО студента", "Предмет", "Итоговая оценка"}){
             @Override
@@ -87,7 +86,8 @@ public class GradesTab extends JPanel {
                 new Insets(0, 100, 20, 100), 0, 0));
     }
 
-    private void createBottomUI() {
+    @Override
+    protected void createBottom() {
         JButton addButton = new JButton("Поставить оценку");
         JButton editButton = new JButton("Изменить оценку");
         JButton deleteButton = new JButton("Удалить оценку");
@@ -116,6 +116,8 @@ public class GradesTab extends JPanel {
             int selectedRow = gradesTable.getSelectedRow();
             fullNameTextField.setText((String)gradesTable.getValueAt(selectedRow, 1));
             gradeTextField.setText((String)gradesTable.getValueAt(selectedRow, 2));
+            Subject subject = SubjectDao.findByName((String) table.getValueAt(selectedRow, 3));
+            subjectComboBox.getModel().setSelectedItem(subject);
             createAddNewEditButtonUI(GradesDao::update, selectedRow, fullNameTextField, gradeTextField);
             update();
         });
@@ -144,20 +146,14 @@ public class GradesTab extends JPanel {
             subjectComboBox.addItem(subject);
         }
 
-        JButton tryId = new JButton("Попробовать");
-
-
-
         JButton addEditTeacherButton = new JButton("Сохранить");
 
         addEditTeacherButton.addActionListener(listener -> {
             Grades grades = new Grades();
-//            Long studentId = findStudentId(fullNameTextField.getText());
-
             if(selectedRow != -1) {
                 grades.setId((Long) gradesTable.getValueAt(selectedRow, 0));
             }
-//            grades.setStudentId(studentId);
+            grades.setStudentId(findStudentId(fullNameTextField.getText()));
             grades.setSubjectId(((Subject) Objects.requireNonNull(subjectComboBox.getSelectedItem())).getId());
             grades.setMark(Integer.parseInt(gradeTextField.getText()));
             function.accept(grades);
@@ -170,32 +166,23 @@ public class GradesTab extends JPanel {
                 GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
                 new Insets(50, 0, 10, 100), 0, 0));
 
-        addDialog.add(subjectTeacherLabel,new GridBagConstraints(0, 1, 1, 1, 1, 1,
+        addDialog.add(subjectTeacherLabel,new GridBagConstraints(0, 1, 1, 1, 1, 0,
                 GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
                 new Insets(0, 100, 10, 0), 0, 0));
-        addDialog.add(subjectComboBox,new GridBagConstraints(1, 1, 1, 1, 1, 1,
+        addDialog.add(subjectComboBox,new GridBagConstraints(1, 1, 1, 1, 1, 0,
                 GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
                 new Insets(0, 0, 10, 100), 0, 0));
 
-        addDialog.add(gradeLabel,new GridBagConstraints(0, 2, 1, 1, 1, 1,
+        addDialog.add(gradeLabel,new GridBagConstraints(0, 2, 1, 1, 1, 0,
                 GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
                 new Insets(0, 100, 10, 0), 0, 0));
-        addDialog.add(gradeTextField,new GridBagConstraints(1, 2, 1, 1, 1, 1,
+        addDialog.add(gradeTextField,new GridBagConstraints(1, 2, 1, 1, 1, 0,
                 GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
                 new Insets(0, 0, 10, 100), 0, 0));
 
-        addDialog.add(addEditTeacherButton,new GridBagConstraints(0, 4, 2, 1, 1, 0,
+        addDialog.add(addEditTeacherButton,new GridBagConstraints(0, 3, 2, 1, 1, 0,
                 GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
                 new Insets(0, 100, 50, 100), 0, 0));
-        addDialog.add(tryId,new GridBagConstraints(0, 5, 2, 1, 1, 0,
-                GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
-                new Insets(0, 100, 50, 100), 0, 0));
-
-        tryId.addActionListener(listener -> {
-            System.out.println(fullNameTextField.getText());
-            Long studentId = findStudentId(fullNameTextField.getText());
-            //System.out.println(studentId);
-        });
 
         addDialog.setVisible(true);
 

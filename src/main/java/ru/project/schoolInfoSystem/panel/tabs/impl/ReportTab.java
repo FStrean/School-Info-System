@@ -23,7 +23,6 @@ public class ReportTab extends PanelTab {
 
         createTop();
         createTable();
-        createTable();
         createBottom();
 
         update();
